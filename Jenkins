@@ -1,0 +1,29 @@
+node {
+
+    stage("Git Clone"){
+
+        git credentialsId: 'GIT_HUB_CREDENTIALS', url: 'https://github.com/konda2mounika/k8s-jenkins-aws.git'
+    }
+
+     stage('Gradle Build') {
+
+       sh './gradlew build'
+
+    }
+      stage("Docker build"){
+        sh 'docker version'
+        sh 'docker build -t mouni .'
+        sh 'docker image list'
+        sh 'docker tag mouni konda2mounika/mouni:latest'
+    }
+
+   withDockerRegistry(credentialsId: 'DOCKER_HUB_PASSWORD', toolName: 'default') {
+        sh 'docker login -u konda2mounika -p ASDfgh@123'
+    }
+     stage("Push Image to Docker Hub"){
+        sh 'docker push  konda2mounika/mouni:latest'
+    }
+    stage("kubernetes deployment"){
+  sh 'kubectl apply -f k8s-spring-boot-deployment.yml'
+}
+}
