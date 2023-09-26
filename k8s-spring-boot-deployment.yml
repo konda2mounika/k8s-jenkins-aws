@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: konda2mounika/konda24:latest
+          image: konda2mounika/mouni:latest
           ports:
             - containerPort: 8080
           env:
