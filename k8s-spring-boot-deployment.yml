@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mouni
-          image: konda2mounika/mouni:latest
+          image: konda2mounika/k801:latest
           ports:
             - containerPort: 8080
           env:
